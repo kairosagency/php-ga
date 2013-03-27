@@ -142,6 +142,17 @@ class Config {
 	 * @var int
 	 */
 	protected $sitespeedSampleRate = 1;
+
+
+
+    /**
+     * Define if we use cookies to stor __utma / __utmb / __utmc values
+     *
+     * @see Page::$loadTime
+     * @link http://code.google.com/apis/analytics/docs/gaJS/gaJSApiBasicConfiguration.html#_gat.GA_Tracker_._setSiteSpeedSampleRate
+     * @var int
+     */
+    protected $useCookies = false;
 	
 	
 	/**
@@ -289,6 +300,21 @@ class Config {
 		
 		$this->sitespeedSampleRate = (int)$sitespeedSampleRate;
 	}
+
+
+    /**
+     * @return bool
+     */
+    public function getUseCookies() {
+        return $this->anonymizeIpAddresses;
+    }
+
+    /**
+     * @param bool $useCookies
+     */
+    public function setUseCookies($useCookies) {
+        $this->useCookies = $useCookies;
+    }
 
 }
 

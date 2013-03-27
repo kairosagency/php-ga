@@ -53,6 +53,12 @@ abstract class Request extends HttpRequest {
 	 * @var \UnitedPrototype\GoogleAnalytics\Session
 	 */
 	protected $session;
+
+
+    /**
+     * @var array
+     */
+    protected $cookieParameters;
 	
 	
 	/**
@@ -166,6 +172,11 @@ abstract class Request extends HttpRequest {
 		$p = $this->buildCustomVariablesParameter($p);
 		$p = $this->buildCampaignParameters($p);
 		$p = $this->buildCookieParameters($p);
+
+        if($this->config->getUseCookies())
+            $p = $this->saveCookieParameters($p);
+
+        $this->cookieParameters = $this->setCookieParameters($p);
 		
 		return $p;
 	}
@@ -266,7 +277,23 @@ abstract class Request extends HttpRequest {
 		
 		return $p;
 	}
-	
+
+    /**
+     * Save user parameters in a cookie. Usefull to persist user information during navigation.
+     *
+     * @param \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder $p
+     * @return \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder
+     */
+    protected function saveCookieParameters(ParameterHolder $p) {
+
+        setcookie('__utma', $p->__utma, time() + 63072000);
+        setcookie('__utmb', $p->__utmb, time() + 1800);
+        setcookie('__utmc', $p->__utmc, 0);
+
+        return $p;
+    }
+
+
 	/**
 	 * @param \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder $p
 	 * @return \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder
@@ -357,7 +384,35 @@ abstract class Request extends HttpRequest {
 	public function setSession(Session $session) {
 		$this->session = $session;
 	}
-	
+
+
+    /**
+     * Allow user to get cookie parameters so as to store them as session parameters, or cookies
+     *
+     * @param \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder $p
+     * @return array
+     */
+    protected function setCookieParameters(ParameterHolder $p) {
+
+        return array(
+            '__utma' => $p->__utma,
+            '__utmb' => $p->__utmb,
+            '__utmc' => $p->__utmc,
+            '__utmv' => $p->__utmv,
+            '__utmz' => $p->__utmz,
+            '__utmx' => $p->__utmx,
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getCookieParameters() {
+
+        return $this->cookieParameters;
+    }
+
+
 }
 
 ?>
