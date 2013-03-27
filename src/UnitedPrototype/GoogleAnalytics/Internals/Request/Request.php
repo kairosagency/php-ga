@@ -173,8 +173,6 @@ abstract class Request extends HttpRequest {
 		$p = $this->buildCampaignParameters($p);
 		$p = $this->buildCookieParameters($p);
 
-        if($this->config->getUseCookies())
-            $p = $this->saveCookieParameters($p);
 
         $this->cookieParameters = $this->setCookieParameters($p);
 		
@@ -394,14 +392,39 @@ abstract class Request extends HttpRequest {
      */
     protected function setCookieParameters(ParameterHolder $p) {
 
-        return array(
-            '__utma' => $p->__utma,
-            '__utmb' => $p->__utmb,
-            '__utmc' => $p->__utmc,
-            '__utmv' => $p->__utmv,
-            '__utmz' => $p->__utmz,
-            '__utmx' => $p->__utmx,
-        );
+        $cookies = array();
+
+        if($p->__utma)
+            $cookies['__utma'] = array(
+                'value' => $p->__utma,
+                'expire' => time() + 63072000
+            );
+
+        if($p->__utmb)
+            $cookies['__utmb'] = array(
+                'value' => $p->__utmb,
+                'expire' => time() + 1800
+            );
+
+        if($p->__utmc)
+            $cookies['__utmc'] = array(
+                'value' => $p->__utmc,
+                'expire' => 0
+            );
+
+        if($p->__utmx)
+            $cookies['__utmx'] = array(
+                'value' => $p->__utmx,
+                'expire' => 0
+            );
+
+        if($p->__utmz)
+            $cookies['__utmz'] = array(
+                'value' => $p->__utmz,
+                'expire' => 0
+            );
+
+        return $cookies;
     }
 
     /**
