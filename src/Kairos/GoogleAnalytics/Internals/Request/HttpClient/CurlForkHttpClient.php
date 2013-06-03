@@ -38,30 +38,39 @@ class CurlForkHttpClient extends AbstractHttpClient {
      */
     public function sendRequest() {
 
-    //todo : add post case
-
-        $url = $this->getConfig()->getEndpointHost();
-        $url .= $this->getConfig()->getEndPointPath();
-
-        if($this->requestString['method'] == "GET")
-            $url .=  "?" . $this->requestString['query'];
+        if($this->getConfig()->getEndpointHost() !== null) {
+            $url = $this->getConfig()->getEndpointHost();
+            $url .= $this->getConfig()->getEndPointPath();
 
 
-        $cmd = "curl -X " . $this->requestString['method'] . " '" . $url . "'";
-        $cmd .= " -H '" . $this->requestString['header'] . "'";
+            //setup GET parameters
+            if($this->requestString['method'] == "GET")
+                $url .=  "?" . $this->requestString['query'];
 
-        if (!$this->debug()) {
-            $cmd .= " > /dev/null 2>&1 &";
+
+            $cmd = "curl -X " . $this->requestString['method'] . " '" . $url . "'";
+
+            //setup POST parameters
+            if($this->requestString['method'] == "POST")
+                $url .=  " -d " . "'" . $this->requestString['query'] . "'";
+
+
+            $cmd .= " -H '" . $this->requestString['header'] . "'";
+
+
+            if (!$this->debug()) {
+                $cmd .= " > /dev/null 2>&1 &";
+            }
+
+            exec($cmd, $output, $exit);
+
+
+            //todo : implements handlerror
+            /*if ($exit != 0) {
+                $this->handleError($exit, $output);
+            }
+            */
         }
-
-        exec($cmd, $output, $exit);
-
-
-        //todo : implements handlerror
-        /*if ($exit != 0) {
-            $this->handleError($exit, $output);
-        }
-        */
 
         return $exit == 0;
     }

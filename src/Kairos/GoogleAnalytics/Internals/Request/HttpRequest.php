@@ -126,19 +126,7 @@ abstract class HttpRequest {
         $result['method'] = $usePost ? 'POST' : 'GET';
 
 
-
-/*
-        if(!$usePost) {
-            $r = 'GET ' . $this->config->getEndpointPath() . '?' . $queryString . ' HTTP/1.0' . "\r\n";
-        } else {
-            // FIXME: The "/p" shouldn't be hardcoded here, instead we need a GET and a POST endpoint...
-            $r = 'POST /p' . $this->config->getEndpointPath() . ' HTTP/1.0' . "\r\n";
-        }
-*/
-
-
-        $r = "";
-        $r .= 'HTTP/1.0' . "\r\n";
+        $r = 'HTTP/1.0' . "\r\n";
         $r .= 'Host: ' . $this->config->getEndpointHost() . "\r\n";
 
 
