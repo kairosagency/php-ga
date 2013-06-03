@@ -36,7 +36,7 @@ class SocketHttpClient extends AbstractHttpClient {
 
         //build socket request
         if($this->requestString['method'] == "GET") {
-            $r = $this->requestString['method'] . $this->getConfig()->getEndpointPath() . '?' . $this->requestString['query'];
+            $r = $this->requestString['method'] . " " . $this->getConfig()->getEndpointPath() . '?' . $this->requestString['query'];
         } else {
             // FIXME: The "/p" shouldn't be hardcoded here, instead we need a GET and a POST endpoint...
             $r = $this->requestString['method'] . ' /p' . $this->getConfig()->getEndpointPath();
