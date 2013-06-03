@@ -1,7 +1,9 @@
 {
     "name":"kairos/googleanalytics",
     "description":"'ga.js in PHP' - Implementation of a generic server-side Google Analytics client in PHP that implements nearly every parameter and tracking feature of the original GA Javascript client.",
-	"homepage":"http://code.google.com/p/php-ga/",
+	"homepage":"https://github.com/kairosagency/php-ga",
+    "version":"1.2.0",
+    "type":"library",
     "autoload":{
         "psr-0":{
             "Kairos\\GoogleAnalytics":"src/"
@@ -11,5 +13,27 @@
     "require":{
         "php":">=5.3"
     },
+    "authors": [
+        {
+            "name": "Thomas Bachem",
+            "email": "mail@thomasbachem.com",
+            "homepage": "http://blog.unitedprototype.com/",
+            "role": "Developer"
+        },
+        {
+            "name": "t0k4rt",
+            "email": "assouad@kairosagency.com",
+            "homepage": "https://github.com/t0k4rt",
+            "company": "KairosAgency",
+            "role": "Developer"
+        },
+        {
+            "name": "Matthiew",
+            "email": "faule@kairosagency.com",
+            "homepage": "https://github.com/Matthiew",
+            "company": "KairosAgency",
+            "role": "Developer"
+        }
+    ],
     "minimum-stability":"dev"
 }
