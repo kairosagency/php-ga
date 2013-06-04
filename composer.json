@@ -1,5 +1,5 @@
 {
-    "name":"kairosagency/php-ga",
+    "name":"unitedprototype/php-ga",
     "description":"'ga.js in PHP' - Implementation of a generic server-side Google Analytics client in PHP that implements nearly every parameter and tracking feature of the original GA Javascript client.",
 	"homepage":"https://github.com/kairosagency/php-ga",
     "version":"1.2.0",
